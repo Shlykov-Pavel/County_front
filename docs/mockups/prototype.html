@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Северное графство — макет сайта</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --navy:#23364B; --navy-deep:#1A2939; --snow:#F2F5F8; --white:#fff;
+  --gold:#C9A227; --gold-soft:#E3C766; --ice:#C7D6E2; --steel:#8CA3B8;
+  --ink:#22303D; --muted:#5C7286;
+  --free:#4C7A5A; --hold:#B08A1E;
+  --r-s:10px; --r-m:16px;
+  --serif:"Playfair Display","Cormorant Garamond","Liberation Serif",Georgia,serif;
+  --sans:"Inter","Nunito Sans","Liberation Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--snow);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--navy);margin:0;font-weight:600;line-height:1.15}
+h2{font-size:34px;letter-spacing:.01em}
+h3{font-size:22px}
+p{margin:0 0 14px}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.section{padding:88px 0}
+.section--tight{padding:56px 0}
+.dark{background:var(--navy);color:#DCE6EF}
+.dark h2,.dark h3,.dark h4{color:#fff}
+.ice{background:var(--ice)}
+.center{text-align:center}
+.muted{color:var(--muted)}
+.dark .muted{color:#9FB4C7}
+
+/* --- элементы стиля --- */
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.dark .eyebrow{color:var(--gold-soft)}
+.rule{display:flex;align-items:center;gap:14px;justify-content:center;margin:18px 0 40px}
+.rule::before,.rule::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold))}
+.rule::after{transform:rotate(180deg)}
+.rule i{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 30px;border-radius:999px;
+  font:500 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:.2s}
+.btn--gold{background:var(--gold);color:#22303D}
+.btn--gold:hover{background:var(--gold-soft)}
+.btn--ghost{border-color:var(--gold);color:var(--gold)}
+.btn--ghost:hover{background:rgba(201,162,39,.1)}
+.arrow{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:inline-flex;gap:8px;align-items:center}
+.badge{display:inline-block;padding:5px 12px;border-radius:999px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--ice);color:var(--navy)}
+.badge--free{background:rgba(76,122,90,.14);color:var(--free)}
+.badge--hold{background:rgba(201,162,39,.18);color:var(--hold)}
+.badge--gone{background:rgba(140,163,184,.22);color:#5C7286}
+.badge--title{background:var(--navy);color:var(--gold-soft)}
+
+/* --- карточки и сетки --- */
+.grid{display:grid;gap:26px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--white);border:1px solid #E2E9F0;border-radius:var(--r-m);overflow:hidden;transition:.2s}
+.card:hover{border-color:var(--gold-soft)}
+.card .thumb{overflow:hidden;background:var(--ice)}
+.card .thumb img{width:100%;height:100%;object-fit:cover;transition:.35s}
+.card:hover .thumb img{transform:scale(1.04)}
+.card .body{padding:20px}
+.ratio-45{aspect-ratio:4/5}
+.ratio-43{aspect-ratio:4/3}
+.ratio-11{aspect-ratio:1/1}
+.ph{background:var(--ice);display:flex;align-items:center;justify-content:center;color:#7E97AC;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.meta{font-size:13px;color:var(--muted)}
+.pedigree-name{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);margin-top:4px}
+
+/* --- шапка --- */
+.hdr{position:sticky;top:0;z-index:50;background:var(--navy);border-bottom:1px solid rgba(201,162,39,.35)}
+.hdr .container{display:flex;align-items:center;gap:26px;height:76px}
+.nav{display:flex;gap:26px;flex:1}
+.nav--right{justify-content:flex-end}
+.nav a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#D6E1EC;padding:6px 0;border-bottom:1px solid transparent;white-space:nowrap}
+.nav a:hover{color:#fff}
+.nav a.active{color:var(--gold-soft);border-bottom-color:var(--gold)}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.brand span{font-family:var(--serif);font-size:24px;color:var(--gold-soft);white-space:nowrap}
+.burger{display:none;width:40px;height:40px;border:0;background:none;cursor:pointer;flex-direction:column;gap:5px;justify-content:center;align-items:center}
+.burger i{display:block;width:24px;height:2px;background:var(--gold-soft)}
+
+/* --- герой --- */
+.hero{position:relative;min-height:660px;display:flex;align-items:center;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,32,46,.82) 0%,rgba(20,32,46,.5) 42%,rgba(20,32,46,.05) 75%)}
+.hero .container{position:relative;z-index:2}
+.hero h1{color:#fff;font-size:74px;letter-spacing:.05em;text-transform:uppercase;line-height:1.02;margin:14px 0 18px}
+.hero .slogan{font-family:var(--serif);font-size:20px;color:var(--gold-soft);letter-spacing:.1em;margin-bottom:34px}
+.hero .lead{max-width:520px}
+
+/* --- шапка внутренней страницы --- */
+.page-head{background:var(--navy-deep);color:#fff;padding:56px 0 60px}
+.page-head h1{color:#fff;font-size:46px;letter-spacing:.04em;text-transform:uppercase}
+.crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:16px}
+.crumbs a:hover{color:var(--gold-soft)}
+
+/* --- фильтры и табы --- */
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:22px 0 34px}
+.chip{padding:9px 18px;border:1px solid #D5DFE8;border-radius:999px;background:#fff;font-size:13px;cursor:pointer;color:var(--muted)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:var(--gold-soft)}
+.filters .sep{width:1px;height:26px;background:#D5DFE8;margin:0 8px}
+.tabs{display:flex;gap:34px;border-bottom:1px solid #DCE4EC;margin-bottom:38px}
+.tab{padding:14px 2px;border-bottom:2px solid transparent;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border-x:0;border-top:0}
+.tab.on{color:var(--navy);border-bottom-color:var(--gold)}
+
+/* --- служебные --- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stats b{display:block;font-family:var(--serif);font-size:46px;color:var(--navy);font-weight:600}
+.stats span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.corners{position:relative;padding:40px}
+.corners::before,.corners::after{content:"";position:absolute;width:34px;height:34px;border:1px solid var(--gold)}
+.corners::before{left:0;top:0;border-right:0;border-bottom:0}
+.corners::after{right:0;bottom:0;border-left:0;border-top:0}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;padding:14px 16px;border:1px solid #D5DFE8;border-radius:var(--r-s);font:15px var(--sans);background:#fff;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical}
+.table{width:100%;border-collapse:collapse;font-size:15px}
+.table td{padding:11px 0;border-bottom:1px solid #E6ECF2}
+.table td:first-child{color:var(--muted);width:45%}
+.ok{color:var(--free)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.step{counter-increment:s;position:relative;padding-top:52px}
+.step::before{content:counter(s);position:absolute;top:0;left:0;width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--gold);font-size:18px}
+.acc{border-top:1px solid #DCE4EC}
+.acc details{border-bottom:1px solid #DCE4EC}
+.acc summary{padding:20px 0;cursor:pointer;font-family:var(--serif);font-size:19px;color:var(--navy);list-style:none;display:flex;justify-content:space-between}
+.acc summary::after{content:"+";color:var(--gold);font-size:22px}
+.acc details[open] summary::after{content:"–"}
+.acc p{padding-bottom:18px;margin:0;color:var(--muted)}
+.ped .meta{margin-bottom:10px}
+.ped__parent{border-left:2px solid var(--gold)}
+.ped__grand{display:grid;gap:12px;margin:12px 0 0 34px;position:relative}
+.ped__grand::before{content:"";position:absolute;left:-18px;top:0;bottom:22px;width:1px;background:#DCE4EC}
+.quote{background:#fff;border:1px solid #E2E9F0;border-radius:var(--r-m);padding:30px}
+.quote p{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--navy)}
+
+/* --- подвал --- */
+.ftr{background:var(--navy-deep);color:#B9C9D8;padding:56px 0 26px;font-size:14px}
+.ftr .cols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:34px}
+.ftr h4{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);font-family:var(--sans);margin-bottom:16px}
+.ftr a:hover{color:#fff}
+.ftr .bottom{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;font-size:12px;color:#7E93A8}
+.soc{display:flex;gap:10px}
+.soc a{width:38px;height:38px;border:1px solid rgba(201,162,39,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold-soft);font-size:12px}
+
+.page{display:none}
+.page.on{display:block}
+
+@media(max-width:900px){
+  .g3,.g4,.stats,.steps{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1fr;gap:30px}
+  .nav{display:none}
+  .burger{display:flex}
+  .hdr .container{justify-content:space-between}
+  .hero h1{font-size:44px}
+  .hero{min-height:460px}
+  .hero::after{background:linear-gradient(180deg,rgba(26,41,57,.45) 0%,rgba(26,41,57,.75) 55%,rgba(26,41,57,.92) 100%)}
+  h2{font-size:27px}
+  .section{padding:52px 0}
+  .ftr .cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){.g2,.g3,.g4,.stats,.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============ ШАПКА ============ -->
+<header class="hdr">
+  <div class="container">
+    <nav class="nav">
+      <a href="#/" data-nav="/">Главная</a>
+      <a href="#/dogs" data-nav="/dogs">Наши собаки</a>
+      <a href="#/puppies" data-nav="/puppies">Щенки</a>
+      <a href="#/about" data-nav="/about">О питомнике</a>
+    </nav>
+    <a class="brand" href="#/">
+      <svg width="40" height="46" viewBox="0 0 40 46" fill="none">
+        <path d="M20 3l4 3 4-3v5H12V3l4 3 4-3z" fill="#E3C766"/>
+        <path d="M4 10h32v18c0 9-8 14-16 17C12 42 4 37 4 28V10z" stroke="#E3C766" stroke-width="1.6" fill="#1A2939"/>
+        <path d="M20 17c3 0 5 2 5 5 0 4-3 6-5 8-2-2-5-4-5-8 0-3 2-5 5-5z" fill="#E3C766" opacity=".9"/>
+      </svg>
+      <span>Северное графство</span>
+    </a>
+    <nav class="nav nav--right">
+      <a href="#/news" data-nav="/news">Новости</a>
+      <a href="#/news" data-nav="/articles">Статьи</a>
+      <a href="#/contacts" data-nav="/contacts">Контакты</a>
+    </nav>
+    <button class="burger" aria-label="Меню"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ ГЛАВНАЯ ============ -->
+<section class="page" id="p-home">
+
+  <div class="hero">
+    <img src="assets/nc-hero-wide.jpg" alt="Кавалер кинг чарльз спаниель и пудель на снегу у усадьбы зимним вечером">
+    <div class="container">
+      <div class="lead">
+        <div class="eyebrow">Питомник кавалер кинг чарльз спаниелей и пуделей</div>
+        <h1>Северное<br>графство</h1>
+        <div class="slogan">Традиции. Красота. Любовь.</div>
+        <a class="btn btn--gold" href="#/puppies">Смотреть щенков →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- три входа -->
+  <div class="section section--tight">
+    <div class="container">
+      <div class="grid g3">
+        <a class="card" href="#/dogs">
+          <div class="thumb ratio-43"><img src="assets/nc-dog-ckcs.jpg" alt="Наши собаки"></div>
+          <div class="body center">
+            <h3>Наши собаки</h3>
+            <p class="meta">Производители: здоровье, породность и характер.</p>
+            <span class="arrow">Перейти в раздел →</span>
+          </div>
+        </a>
+        <a class="card" href="#/puppies">
+          <div class="thumb ratio-43"><img src="assets/nc-puppies.jpg" alt="Щенки"></div>
+          <div class="body center">
+            <h3>Щенки</h3>
+            <p class="meta">Актуальные помёты, планы вязок и свободные малыши.</p>
+            <span class="arrow">Перейти в раздел →</span>
+          </div>
+        </a>
+        <a class="card" href="#/about">
+          <div class="thumb ratio-43"><img src="assets/nc-hero.jpg" alt="О питомнике" style="object-position:50% 30%"></div>
+          <div class="body center">
+            <h3>О питомнике</h3>
+            <p class="meta">Наша история, принципы разведения и забота о каждом.</p>
+            <span class="arrow">Перейти в раздел →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- актуальные щенки -->
+  <div class="section" style="background:#fff">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Свободны сейчас</div>
+        <h2>Актуальные щенки</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="grid g3" id="home-puppies"></div>
+      <div class="center" style="margin-top:38px"><a class="btn btn--ghost" href="#/puppies">Все помёты и планы вязок</a></div>
+    </div>
+  </div>
+
+  <!-- породы -->
+  <div class="section">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Две породы, один характер дома</div>
+        <h2>Кого мы разводим</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div class="thumb" style="aspect-ratio:16/10"><img src="assets/nc-dog-ckcs.jpg" alt="Кавалер кинг чарльз спаниель" style="object-position:50% 25%"></div>
+          <div class="body" style="padding:28px">
+            <h3>Кавалер кинг чарльз спаниель</h3>
+            <p class="meta">Английская королевская порода: 6–8 кг, мягкий нрав, полное отсутствие агрессии.
+              Собака-компаньон, которая одинаково рада прогулке и вечеру на диване. Отлично уживается с детьми.</p>
+            <a class="arrow" href="#/dogs">Собаки породы →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="aspect-ratio:16/10"><img src="assets/nc-dog-poodle.jpg" alt="Пудель" style="object-position:50% 20%"></div>
+          <div class="body" style="padding:28px">
+            <h3>Пудель</h3>
+            <p class="meta">Одна из самых умных пород: быстрое обучение, шерсть без сезонной линьки,
+              подходит аллергикам. Малый и той — компактный размер при полноценном рабочем интеллекте.</p>
+            <a class="arrow" href="#/dogs">Собаки породы →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- витрина собак -->
+  <div class="section dark">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Основа питомника</div>
+        <h2>Наши производители</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="grid g4" id="home-dogs"></div>
+      <div class="center" style="margin-top:40px"><a class="btn btn--gold" href="#/dogs">Весь каталог собак</a></div>
+    </div>
+  </div>
+
+  <!-- цифры -->
+  <div class="section section--tight ice">
+    <div class="container">
+      <div class="stats">
+        <div><b>14</b><span>лет в разведении</span></div>
+        <div><b>38</b><span>выращено помётов</span></div>
+        <div><b>52</b><span>титула наших собак</span></div>
+        <div><b>9</b><span>стран, где живут щенки</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- о питомнике -->
+  <div class="section">
+    <div class="container split">
+      <div>
+        <div class="eyebrow">О питомнике</div>
+        <h2>Дом, где собаки живут в семье</h2>
+        <div class="rule" style="justify-content:flex-start;margin-left:0"><i></i></div>
+        <p>«Северное графство» — это не вольеры, а дом под Петербургом. Собаки растут в комнатах, спят на диванах
+          и знают, что такое гости, пылесос и детские руки. Поэтому щенок приезжает к вам уже готовым к жизни в семье.</p>
+        <p>Мы вяжем редко и только тех собак, что прошли тесты здоровья и получили экспертную оценку в ринге.
+          Каждого щенка мы сопровождаем всю жизнь — от первой прививки до вопросов через десять лет.</p>
+        <p style="font-family:var(--serif);font-size:19px;color:var(--navy);margin-top:24px">Елена Северова<br>
+          <span class="meta" style="font-family:var(--sans)">заводчик, эксперт РКФ</span></p>
+        <a class="arrow" href="#/about">Подробнее о нас →</a>
+      </div>
+      <div class="thumb ratio-43" style="border-radius:var(--r-m);overflow:hidden">
+        <img src="assets/nc-puppies.jpg" alt="Щенки дома" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+  </div>
+
+  <!-- новости -->
+  <div class="section" style="background:#fff">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Хроника</div>
+        <h2>Новости и статьи</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="grid g3">
+        <a class="card" href="#/news">
+          <div class="thumb ratio-43"><img src="assets/nc-puppies.jpg" alt=""></div>
+          <div class="body">
+            <div class="meta">12 января 2026 · Новости</div>
+            <h3 style="font-size:19px;margin:8px 0">Родился помёт «А» от Авроры и Честера</h3>
+            <span class="arrow">Читать →</span>
+          </div>
+        </a>
+        <a class="card" href="#/news">
+          <div class="thumb ratio-43"><img src="assets/nc-dog-ckcs.jpg" alt="" style="object-position:50% 20%"></div>
+          <div class="body">
+            <div class="meta">28 декабря 2025 · Новости</div>
+            <h3 style="font-size:19px;margin:8px 0">Аврора — Лучший представитель породы на «Зимней короне»</h3>
+            <span class="arrow">Читать →</span>
+          </div>
+        </a>
+        <a class="card" href="#/news">
+          <div class="thumb ratio-43"><img src="assets/nc-dog-poodle.jpg" alt="" style="object-position:50% 15%"></div>
+          <div class="body">
+            <div class="meta">7 декабря 2025 · Статья</div>
+            <h3 style="font-size:19px;margin:8px 0">Как выбрать щенка: семь вопросов заводчику</h3>
+            <span class="arrow">Читать →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- отзывы -->
+  <div class="section">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Счастливые семьи</div>
+        <h2>Отзывы владельцев</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="grid g2">
+        <div class="quote">
+          <p>«Забрали Марту два года назад. Заводчик до сих пор на связи и отвечает на любые вопросы —
+            даже про корм и стрижку. Собака здоровая и абсолютно домашняя.»</p>
+          <div class="meta">Ирина и Марта · Москва</div>
+        </div>
+        <div class="quote">
+          <p>«Долго выбирали питомник и не пожалели. Показали родителей, документы, тесты — всё честно.
+            Наш Тимофей вырос точь-в-точь как обещали по характеру.»</p>
+          <div class="meta">Семья Ковалёвых · Санкт-Петербург</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section dark">
+    <div class="container corners">
+      <div class="split">
+        <div>
+          <div class="eyebrow">Заявка</div>
+          <h2>Хотите щенка из «Северного графства»?</h2>
+          <p class="muted" style="margin-top:14px">Напишите пару слов о себе — какая порода интересна, есть ли опыт,
+            живёте ли в квартире или доме. Мы ответим в течение дня и расскажем о ближайших помётах.</p>
+        </div>
+        <div>
+          <div class="field"><label>Имя</label><input placeholder="Как к вам обращаться"></div>
+          <div class="field"><label>Телефон или телеграм</label><input placeholder="+7 ___ ___-__-__"></div>
+          <div class="field"><label>Комментарий</label><textarea placeholder="Интересует кавалер, девочка"></textarea></div>
+          <button class="btn btn--gold">Отправить заявку</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ НАШИ СОБАКИ ============ -->
+<section class="page" id="p-dogs">
+  <div class="page-head">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — Наши собаки</div>
+      <h1>Наши собаки</h1>
+      <p class="muted" style="max-width:620px;margin-top:14px">Производители и любимцы питомника.
+        У каждой собаки — родословная, выставочные оценки и пройденные тесты здоровья.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filters">
+      <button class="chip on">Все породы</button>
+      <button class="chip">Кавалеры</button>
+      <button class="chip">Пудели</button>
+      <span class="sep"></span>
+      <button class="chip">Суки</button>
+      <button class="chip">Кобели</button>
+      <span class="sep"></span>
+      <button class="chip">Производители</button>
+      <button class="chip">Юниоры</button>
+      <button class="chip">Ветераны</button>
+      <span style="margin-left:auto" class="meta">Найдено: 6</span>
+    </div>
+  </div>
+  <div class="container" style="padding-bottom:88px">
+    <div class="grid g3" id="dogs-grid"></div>
+  </div>
+</section>
+
+<!-- ============ КАРТОЧКА СОБАКИ ============ -->
+<section class="page" id="p-dog">
+  <div class="page-head" style="padding-bottom:40px">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — <a href="#/dogs">Наши собаки</a> — Аврора</div>
+    </div>
+  </div>
+  <div class="section section--tight" style="padding-top:44px">
+    <div class="container split" style="align-items:start">
+      <div>
+        <div class="thumb ratio-45" style="border-radius:var(--r-m);overflow:hidden;background:var(--ice)">
+          <img src="assets/nc-dog-ckcs.jpg" alt="Аврора" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div class="grid g4" style="gap:12px;margin-top:12px">
+          <div class="thumb ratio-11" style="border-radius:var(--r-s);overflow:hidden;border:1px solid var(--gold)">
+            <img src="assets/nc-dog-ckcs.jpg" alt=""></div>
+          <div class="thumb ratio-11 ph" style="border-radius:var(--r-s)">фото</div>
+          <div class="thumb ratio-11 ph" style="border-radius:var(--r-s)">фото</div>
+          <div class="thumb ratio-11 ph" style="border-radius:var(--r-s)">+6</div>
+        </div>
+      </div>
+      <div>
+        <span class="badge badge--title">Юный чемпион РКФ</span>
+        <h1 style="font-size:52px;margin:16px 0 4px">Аврора</h1>
+        <div class="pedigree-name">Northern County Aurora Borealis</div>
+        <div class="rule" style="justify-content:flex-start;margin:22px 0 26px"><i></i></div>
+        <table class="table">
+          <tr><td>Порода</td><td>Кавалер кинг чарльз спаниель</td></tr>
+          <tr><td>Пол</td><td>Сука</td></tr>
+          <tr><td>Дата рождения</td><td>14 марта 2022 (3 года)</td></tr>
+          <tr><td>Окрас</td><td>Бленхейм</td></tr>
+          <tr><td>Вес</td><td>7,2 кг</td></tr>
+          <tr><td>Клеймо / чип</td><td>СГФ 1147 · 643094100112233</td></tr>
+        </table>
+        <h3 style="margin:34px 0 12px">Здоровье</h3>
+        <table class="table">
+          <tr><td>MVD (сердце)</td><td class="ok">✓ чисто, 09.2025</td></tr>
+          <tr><td>Пателла</td><td class="ok">✓ 0/0</td></tr>
+          <tr><td>Глаза (CERF)</td><td class="ok">✓ чисто, 06.2025</td></tr>
+          <tr><td>ДНК: CC/DE, EF, DM</td><td class="ok">✓ clear</td></tr>
+        </table>
+        <div style="display:flex;gap:12px;margin-top:30px">
+          <a class="btn btn--gold" href="#/contacts">Спросить о щенках</a>
+          <a class="btn btn--ghost" href="#/puppies">Помёты от Авроры</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:#fff">
+    <div class="container">
+      <h2>О собаке</h2>
+      <div class="rule" style="justify-content:flex-start;margin:16px 0 26px"><i></i></div>
+      <p style="max-width:760px" class="muted">Аврора — очень контактная и мягкая девочка классического окраса бленхейм.
+        Прекрасно показывает себя в ринге и так же спокойно относится к домашней суете. Отличная мать:
+        сама выкармливает щенков и не отходит от гнезда первые недели.</p>
+
+      <h2 style="margin-top:56px">Родословная</h2>
+      <div class="rule" style="justify-content:flex-start;margin:16px 0 26px"><i></i></div>
+      <div class="grid g2" style="gap:26px">
+        <div class="ped">
+          <div class="meta">Отец</div>
+          <div class="card ped__parent"><div class="body"><b>Ch. Ravenhill Sir Charles</b><div class="pedigree-name">Великобритания</div></div></div>
+          <div class="ped__grand">
+            <div class="card"><div class="body">Ch. Ravenhill Winter King</div></div>
+            <div class="card"><div class="body">Ravenhill Lady Mary</div></div>
+          </div>
+        </div>
+        <div class="ped">
+          <div class="meta">Мать</div>
+          <div class="card ped__parent"><div class="body"><b>Snowlight Estelle</b><div class="pedigree-name">Санкт-Петербург</div></div></div>
+          <div class="ped__grand">
+            <div class="card"><div class="body">Snowlight Grand Duke</div></div>
+            <div class="card"><div class="body">Northern County Vesna</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ЩЕНКИ ============ -->
+<section class="page" id="p-puppies">
+  <div class="page-head">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — Щенки</div>
+      <h1>Щенки</h1>
+      <p class="muted" style="max-width:620px;margin-top:14px">Актуальные помёты, планы вязок и наши выпускники.
+        Щенки уезжают в новый дом с документами, чипом и прививками по возрасту.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:26px">
+    <div class="tabs">
+      <button class="tab on">Доступны · 2</button>
+      <button class="tab">Ожидаются · 1</button>
+      <button class="tab">Выпускники</button>
+    </div>
+
+    <!-- помёт -->
+    <div class="card" style="margin-bottom:34px">
+      <div class="body" style="padding:26px 26px 0">
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+          <div>
+            <span class="badge badge--free">Свободно 2 из 5</span>
+            <h2 style="margin:12px 0 6px">Помёт «А» · кавалер кинг чарльз спаниель</h2>
+            <div class="meta">Родились 12 января 2026 · сейчас 6 недель · готовы к переезду с 15 марта</div>
+          </div>
+          <div style="display:flex;gap:26px">
+            <a href="#/dog" style="display:flex;gap:12px;align-items:center">
+              <img src="assets/nc-dog-ckcs.jpg" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover">
+              <div><div class="meta">Мать</div><b>Аврора</b></div>
+            </a>
+            <a href="#/dog" style="display:flex;gap:12px;align-items:center">
+              <img src="assets/nc-dog-poodle.jpg" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover">
+              <div><div class="meta">Отец</div><b>Честер</b></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="body" style="padding:26px">
+        <div class="grid g4" id="litter-a"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:60px">
+      <div class="body" style="padding:26px">
+        <span class="badge badge--hold">Свободна 1 из 4</span>
+        <h2 style="margin:12px 0 6px">Помёт «В» · пудель малый, абрикос</h2>
+        <div class="meta">Родились 3 декабря 2025 · сейчас 12 недель · готовы к переезду</div>
+        <div class="grid g4" style="margin-top:22px" id="litter-b"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- как купить -->
+  <div class="section" style="background:#fff">
+    <div class="container">
+      <div class="center">
+        <div class="eyebrow">Всё просто</div>
+        <h2>Как купить щенка</h2>
+        <div class="rule"><i></i></div>
+      </div>
+      <div class="steps">
+        <div class="step"><h3 style="font-size:18px">Заявка</h3><p class="meta">Пишете нам, рассказываете о себе и о том, кого ищете.</p></div>
+        <div class="step"><h3 style="font-size:18px">Знакомство</h3><p class="meta">Созваниваемся, показываем малышей и родителей, отвечаем на вопросы.</p></div>
+        <div class="step"><h3 style="font-size:18px">Бронь</h3><p class="meta">Выбираете щенка и закрепляете его договором и задатком.</p></div>
+        <div class="step"><h3 style="font-size:18px">Переезд</h3><p class="meta">В 2–3 месяца щенок едет домой. Доставка по России и за рубеж.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--tight ice">
+    <div class="container">
+      <h2 class="center">Что входит</h2>
+      <div class="rule"><i></i></div>
+      <div class="grid g3">
+        <div><h3 style="font-size:18px">Документы</h3><p class="meta">Метрика щенка РКФ с обменом на родословную, договор купли-продажи.</p></div>
+        <div><h3 style="font-size:18px">Ветеринария</h3><p class="meta">Чип, ветпаспорт, прививки и обработки по возрасту, осмотр кардиолога.</p></div>
+        <div><h3 style="font-size:18px">Сопровождение</h3><p class="meta">Стартовый набор корма, инструкции по уходу и поддержка заводчика — всегда.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ О ПИТОМНИКЕ ============ -->
+<section class="page" id="p-about">
+  <div class="page-head">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — О питомнике</div>
+      <h1>О питомнике</h1>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container split">
+      <div>
+        <div class="eyebrow">С 2011 года</div>
+        <h2>Наша история</h2>
+        <div class="rule" style="justify-content:flex-start;margin:16px 0 24px"><i></i></div>
+        <p>Всё началось с одного кавалера по кличке Чарли, который приехал к нам из Англии и перевернул
+          представление о том, какой может быть собака-компаньон. Через три года появился первый помёт,
+          а вместе с ним и название — «Северное графство».</p>
+        <p>Сегодня в доме живут девять собак двух пород. Мы остаёмся маленьким домашним питомником и не
+          собираемся расти: качество выращивания важнее количества помётов.</p>
+      </div>
+      <div class="thumb" style="aspect-ratio:4/3;border-radius:var(--r-m);overflow:hidden">
+        <img src="assets/nc-hero.jpg" alt="Дом питомника зимой" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="container">
+      <div class="center"><div class="eyebrow">Во что мы верим</div><h2>Принципы разведения</h2><div class="rule"><i></i></div></div>
+      <div class="grid g3">
+        <div><h3>Здоровье прежде титулов</h3><p class="muted">В разведение идут только собаки с полным набором тестов.
+          Красивая, но непроверенная собака в паре не участвует.</p></div>
+        <div><h3>Дом, а не вольер</h3><p class="muted">Щенки растут в комнатах среди людей, звуков и гостей —
+          так формируется устойчивая психика.</p></div>
+        <div><h3>Пожизненная поддержка</h3><p class="muted">Мы остаёмся на связи с каждой семьёй и при любых
+          обстоятельствах готовы забрать свою собаку обратно.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="center"><div class="eyebrow">Признание</div><h2>Дипломы и сертификаты</h2><div class="rule"><i></i></div></div>
+      <div class="grid g4">
+        <div class="ph ratio-45" style="border-radius:var(--r-s)">диплом</div>
+        <div class="ph ratio-45" style="border-radius:var(--r-s)">диплом</div>
+        <div class="ph ratio-45" style="border-radius:var(--r-s)">сертификат</div>
+        <div class="ph ratio-45" style="border-radius:var(--r-s)">тест здоровья</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--tight" style="background:#fff">
+    <div class="container" style="max-width:840px">
+      <div class="center"><h2>Частые вопросы</h2><div class="rule"><i></i></div></div>
+      <div class="acc">
+        <details open><summary>Можно ли приехать посмотреть щенков?</summary>
+          <p>Да, после первой прививки — примерно с шести недель. Приезд по договорённости, в сменной обуви и без визитов
+            на другие питомники в тот же день.</p></details>
+        <details><summary>Почему щенок с документами дороже?</summary>
+          <p>В цену входят тесты родителей, вязка с проверенным кобелём, ветеринария помёта, качественное питание матери
+            и щенков. Метрика РКФ — подтверждение, что щенок действительно той породы, за которую вы платите.</p></details>
+        <details><summary>Отправляете ли вы щенков в другие города?</summary>
+          <p>Да. Возможна передача через доверенное лицо или авиаперевозка в салоне. Все документы для перевозки готовим сами.</p></details>
+        <details><summary>Подходит ли пудель аллергикам?</summary>
+          <p>Чаще всего да: пудель не линяет сезонно. Но реакция индивидуальна, поэтому мы приглашаем приехать
+            и провести с собаками время до принятия решения.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КОНТАКТЫ ============ -->
+<section class="page" id="p-contacts">
+  <div class="page-head">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — Контакты</div>
+      <h1>Контакты</h1>
+      <p class="muted" style="max-width:600px;margin-top:14px">Ответим в течение дня. Если вопрос про конкретного щенка —
+        напишите его номер или кличку.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container split" style="align-items:start">
+      <div>
+        <h2>Оставить заявку</h2>
+        <div class="rule" style="justify-content:flex-start;margin:16px 0 26px"><i></i></div>
+        <div class="grid g2" style="gap:16px">
+          <div class="field"><label>Имя</label><input placeholder="Ваше имя"></div>
+          <div class="field"><label>Телефон или телеграм</label><input placeholder="+7 ___ ___-__-__"></div>
+        </div>
+        <div class="field"><label>Тема обращения</label>
+          <select><option>Хочу щенка</option><option>Вязка</option><option>Консультация по породе</option></select></div>
+        <div class="field"><label>Сообщение</label><textarea placeholder="Расскажите немного о себе"></textarea></div>
+        <label class="meta" style="display:flex;gap:10px;align-items:flex-start;margin-bottom:22px">
+          <input type="checkbox" style="width:auto;margin-top:4px"> Согласен на обработку персональных данных</label>
+        <button class="btn btn--gold">Отправить</button>
+      </div>
+      <div>
+        <h2>Связаться напрямую</h2>
+        <div class="rule" style="justify-content:flex-start;margin:16px 0 26px"><i></i></div>
+        <table class="table">
+          <tr><td>Телефон</td><td>+7 (921) 123-45-67</td></tr>
+          <tr><td>Почта</td><td>severnoe.grafstvo@gmail.com</td></tr>
+          <tr><td>Мессенджеры</td><td>WhatsApp · Telegram</td></tr>
+          <tr><td>Где мы</td><td>Санкт-Петербург и Ленинградская область</td></tr>
+          <tr><td>Визит</td><td>по предварительной договорённости</td></tr>
+        </table>
+        <div class="ph" style="height:240px;border-radius:var(--r-m);margin-top:26px">карта</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ НОВОСТИ ============ -->
+<section class="page" id="p-news">
+  <div class="page-head">
+    <div class="container">
+      <div class="crumbs"><a href="#/">Главная</a> — Новости</div>
+      <h1>Новости</h1>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="grid g3" id="news-grid"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ ПОДВАЛ ============ -->
+<footer class="ftr">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <div class="brand" style="margin-bottom:14px">
+          <svg width="34" height="40" viewBox="0 0 40 46" fill="none">
+            <path d="M20 3l4 3 4-3v5H12V3l4 3 4-3z" fill="#E3C766"/>
+            <path d="M4 10h32v18c0 9-8 14-16 17C12 42 4 37 4 28V10z" stroke="#E3C766" stroke-width="1.6" fill="#1A2939"/>
+            <path d="M20 17c3 0 5 2 5 5 0 4-3 6-5 8-2-2-5-4-5-8 0-3 2-5 5-5z" fill="#E3C766" opacity=".9"/>
+          </svg>
+          <span style="font-size:20px">Северное графство</span>
+        </div>
+        <p style="font-family:var(--serif);color:#9FB4C7">Где верность становится традицией,<br>а любовь — наследием.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <p><a href="#/dogs">Наши собаки</a><br><a href="#/puppies">Щенки</a><br><a href="#/about">О питомнике</a><br><a href="#/news">Новости</a></p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p>+7 (921) 123-45-67<br>severnoe.grafstvo@gmail.com<br>Санкт-Петербург и ЛО</p>
+      </div>
+      <div>
+        <h4>Мы в сетях</h4>
+        <div class="soc"><a href="#/">IG</a><a href="#/">VK</a><a href="#/">TG</a></div>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© Северное графство, 2026. Все права защищены.</span>
+      <a href="#/">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Демо-данные: показывают форму объектов, которые придут из API.
+const dogs = [
+  {name:"Аврора", full:"Northern County Aurora Borealis", breed:"Кавалер кинг чарльз спаниель", sex:"сука", born:2022, title:"Юный чемпион РКФ", photo:"nc-dog-ckcs.jpg"},
+  {name:"Честер", full:"Snowlight Chester Gold", breed:"Пудель малый", sex:"кобель", born:2021, title:"Чемпион России", photo:"nc-dog-poodle.jpg"},
+  {name:"Марта", full:"Northern County Martha Snow", breed:"Кавалер кинг чарльз спаниель", sex:"сука", born:2023, title:"Юниор", photo:"nc-dog-ckcs.jpg"},
+  {name:"Персей", full:"Golden Vale Perseus", breed:"Пудель той", sex:"кобель", born:2020, title:"Гранд чемпион", photo:"nc-dog-poodle.jpg"},
+  {name:"Элеонора", full:"Northern County Eleonora", breed:"Кавалер кинг чарльз спаниель", sex:"сука", born:2019, title:"Ветеран", photo:"nc-dog-ckcs.jpg"},
+  {name:"Тимофей", full:"Northern County Timothy", breed:"Пудель малый", sex:"кобель", born:2023, title:"Юниор", photo:"nc-dog-poodle.jpg"}
+];
+const puppies = [
+  {n:"Мальчик №1", nick:"«Ариэль»", color:"бленхейм", status:"free", photo:"nc-puppies.jpg", pos:"22% 55%"},
+  {n:"Девочка №2", nick:"«Аделия»", color:"триколор", status:"hold", photo:"nc-puppies.jpg", pos:"50% 50%"},
+  {n:"Девочка №3", nick:"«Аврелия»", color:"бленхейм", status:"free", photo:"nc-puppies.jpg", pos:"78% 55%"},
+  {n:"Мальчик №4", nick:"«Атлас»", color:"бленхейм", status:"gone", photo:"nc-puppies.jpg", pos:"38% 40%"}
+];
+const litterB = [
+  {n:"Девочка №1", nick:"«Вивьен»", color:"абрикос", status:"free", photo:"nc-dog-poodle.jpg", pos:"50% 18%"},
+  {n:"Мальчик №2", nick:"«Валентин»", color:"абрикос", status:"gone", photo:"nc-dog-poodle.jpg", pos:"40% 30%"},
+  {n:"Девочка №3", nick:"«Виола»", color:"кремовый", status:"gone", photo:"nc-dog-poodle.jpg", pos:"60% 25%"},
+  {n:"Мальчик №4", nick:"«Вальтер»", color:"абрикос", status:"gone", photo:"nc-dog-poodle.jpg", pos:"50% 40%"}
+];
+const st = {free:["badge--free","Доступен"], hold:["badge--hold","Забронирован"], gone:["badge--gone","Продан"]};
+const img = f => "assets/" + f;
+
+const dogCard = d => `
+  <a class="card" href="#/dog">
+    <div class="thumb ratio-45"><img src="${img(d.photo)}" alt="${d.name}"></div>
+    <div class="body">
+      <span class="badge badge--title">${d.title}</span>
+      <h3 style="margin:12px 0 0">${d.name}</h3>
+      <div class="pedigree-name">${d.full}</div>
+      <div class="meta" style="margin-top:10px">${d.breed} · ${d.sex} · ${d.born}</div>
+    </div>
+  </a>`;
+
+const puppyCard = p => `
+  <div class="card">
+    <div class="thumb ratio-11"><img src="${img(p.photo)}" alt="${p.n}" style="object-position:${p.pos}"></div>
+    <div class="body" style="padding:16px">
+      <span class="badge ${st[p.status][0]}">${st[p.status][1]}</span>
+      <h3 style="font-size:18px;margin:10px 0 2px">${p.n}</h3>
+      <div class="meta">${p.nick} · ${p.color}</div>
+      ${p.status === "free" ? '<a class="arrow" style="margin-top:12px" href="#/contacts">Забронировать →</a>' : ""}
+    </div>
+  </div>`;
+
+const newsCard = (date, kind, title, photo) => `
+  <a class="card" href="#/news">
+    <div class="thumb ratio-43"><img src="${img(photo)}" alt=""></div>
+    <div class="body">
+      <div class="meta">${date} · ${kind}</div>
+      <h3 style="font-size:19px;margin:8px 0">${title}</h3>
+      <span class="arrow">Читать →</span>
+    </div>
+  </a>`;
+
+const fill = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+fill("dogs-grid", dogs.map(dogCard).join(""));
+fill("home-dogs", dogs.slice(0, 4).map(dogCard).join(""));
+fill("home-puppies", puppies.slice(0, 3).map(puppyCard).join(""));
+fill("litter-a", puppies.map(puppyCard).join(""));
+fill("litter-b", litterB.map(puppyCard).join(""));
+fill("news-grid", [
+  newsCard("12 января 2026", "Новости", "Родился помёт «А» от Авроры и Честера", "nc-puppies.jpg"),
+  newsCard("28 декабря 2025", "Новости", "Аврора — Лучший представитель породы на «Зимней короне»", "nc-dog-ckcs.jpg"),
+  newsCard("7 декабря 2025", "Статья", "Как выбрать щенка: семь вопросов заводчику", "nc-dog-poodle.jpg"),
+  newsCard("19 ноября 2025", "Статья", "Уход за шерстью пуделя: стрижка, расчёсывание, сроки", "nc-dog-poodle.jpg"),
+  newsCard("2 ноября 2025", "Новости", "Планы вязок на весну 2026", "nc-hero.jpg"),
+  newsCard("14 октября 2025", "Статья", "Первые дни щенка дома", "nc-puppies.jpg")
+].join(""));
+
+// Роутер макета: одна страница видима за раз.
+const routes = {"/":"p-home", "/dogs":"p-dogs", "/dog":"p-dog", "/puppies":"p-puppies",
+                "/about":"p-about", "/contacts":"p-contacts", "/news":"p-news"};
+function render() {
+  const path = location.hash.slice(1) || "/";
+  const id = routes[path] || "p-home";
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("on", p.id === id));
+  document.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("active", a.dataset.nav === path));
+  window.scrollTo(0, 0);
+}
+addEventListener("hashchange", render);
+render();
+
+// Фильтры и табы в макете только переключают вид.
+document.querySelectorAll(".filters").forEach(bar => bar.addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (chip) chip.classList.toggle("on");
+}));
+document.querySelectorAll(".tabs").forEach(bar => bar.addEventListener("click", e => {
+  const tab = e.target.closest(".tab");
+  if (!tab) return;
+  bar.querySelectorAll(".tab").forEach(t => t.classList.remove("on"));
+  tab.classList.add("on");
+}));
+</script>
+</body>
+</html>

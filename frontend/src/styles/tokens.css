@@ -1,0 +1,35 @@
+/* Единственный источник правды по цветам, шрифтам и размерам.
+   Значения — из docs/concept.md. */
+:root {
+  --navy: #23364b;
+  --navy-deep: #1a2939;
+  --snow: #f2f5f8;
+  --white: #fff;
+  --gold: #c9a227;
+  --gold-soft: #e3c766;
+  --ice: #c7d6e2;
+  --steel: #8ca3b8;
+
+  --ink: #22303d;
+  --muted: #5c7286;
+  --line: #e2e9f0;
+
+  --status-free: #4c7a5a;
+  --status-hold: #b08a1e;
+
+  --radius-s: 10px;
+  --radius-m: 16px;
+
+  --container: 1200px;
+  --gap: 26px;
+  --section-y: 88px;
+
+  --serif: "Playfair Display", "Liberation Serif", Georgia, serif;
+  --sans: "Inter", "Liberation Sans", system-ui, sans-serif;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --section-y: 52px;
+  }
+}
