@@ -44,7 +44,8 @@
 
 - **Репозиторий:** monorepo (`backend/` + `frontend/`).
 - **Бэкенд:** Go, без лишних фреймворков — стандартный `net/http` (роутер из Go 1.22+). БД: PostgreSQL (планируется).
-- **Фронтенд:** React + TypeScript. Рассматриваем Next.js ради SEO и оптимизации изображений. Tailwind CSS, mobile-first.
+- **Фронтенд:** React + TypeScript на Vite, данные — TanStack Query, стили — Tailwind CSS, mobile-first.
+  SEO закрываем пререндером статичных страниц (подробности и обоснование — в [design.md](design.md#5-фронтенд)).
 
 ## Структура страниц
 
@@ -72,17 +73,18 @@
 
 ## Макеты
 
-- Десктоп: `docs/mockups/homepage-desktop.png`
-- Мобильный: `docs/mockups/homepage-mobile.png`
+- Кликабельный макет: [`mockups/prototype.html`](mockups/prototype.html) — шесть страниц, открывается в браузере без сборки.
+- Скриншоты страниц: [`mockups/pages/`](mockups/pages).
+- Ранние эскизы настроения: `mockups/homepage-desktop.png`, `mockups/homepage-mobile.png`.
 
-Это визуальные эскизы-направления (настроение и стиль), а не финальные пиксель-в-пиксель макеты.
+Проработка структуры страниц, дизайн-системы и стека фронтенда — в [design.md](design.md).
 
 ## Дорожная карта
 
 1. Зафиксировать концепцию (этот документ). ✅
-2. Wireframes / мокапы ключевых страниц.
-3. Утвердить API-контракт.
-4. Каркас monorepo: `backend/` поднимается. ← текущий этап
+2. Макеты ключевых страниц. ✅ — [design.md](design.md) и [prototype.html](mockups/prototype.html)
+3. Утвердить API-контракт. ← текущий этап
+4. Каркас monorepo: `backend/` поднимается. ✅
 5. Фронт на моках.
 6. Бэк на Go: БД, миграции, эндпоинты.
 7. Связка фронта с API.

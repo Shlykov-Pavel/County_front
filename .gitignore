@@ -1,0 +1,18 @@
+# Зависимости
+node_modules/
+
+# Сборка фронтенда
+dist/
+frontend/dist/
+
+# Логи
+*.log
+npm-debug.log*
+
+# Переменные окружения
+.env
+.env.local
+.env.*.local
+
+# Системное
+.DS_Store
